@@ -55,7 +55,10 @@ pipeline {
             }
             steps {
                 script {
-                    builder.push()
+                    checkout scm
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-abi') {
+                        builder.push()
+                    }
                 }
             }
         } 
@@ -75,7 +78,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: 'docker-compose.yml',
-                                        execCommand: "docker pull ${dockerhub}:${BRANCH_NAME}; cd /home/abi/fastfood; docker-compose stop; docker-compose up -d --force-recreate",
+                                        execCommand: "docker pull ${image_name}; cd /home/abi/fastfood; docker-compose stop; docker-compose up -d --force-recreate",
                                         execTimeout: 120000,
                                     )
                                 ]
