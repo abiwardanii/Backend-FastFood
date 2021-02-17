@@ -1,19 +1,5 @@
 version: "3.8"
 services:
-  postgres:
-    image: postgres:latest
-    ports:
-        - "5353:5432"
-    volumes:
-        - ./pgdata:/var/lib/postgresql/data
-    networks: 
-        - fastfoodnet
-    environment:
-        - POSTGRES_PASSWORD=yuhagasiri44
-        - POSTGRES_USER=abiwardani
-        - POSTGRES_DB=fooditems
-    mem_limit: 250m
-    cpus: 0.5
   redis: 
     image: redis:latest
     ports: 
@@ -32,12 +18,12 @@ services:
     volumes:
       - ./backendlog:/user/backend
     environment: 
-      - DB_USER=abiwardani
+      - DB_USER=admin
       - MODE=DEV
       - DB_DATABASE=fooditems
-      - DB_HOST=postgres
+      - DB_HOST=3.83.153.65
       - DB_PORT=5432
-      - DB_PASS=yuhagasiri44
+      - DB_PASS=abcd123
       - JWT_KEYS=topsecret
       - CLOUD_KEY=241419149284447
       - CLOUD_SECRET=GELg13NdTEOFtPki8JTZqqe9rC8
@@ -47,7 +33,6 @@ services:
     networks:
       - fastfoodnet
     depends_on:
-      - postgres
       - redis
     mem_limit: 250m
     cpus: 0.5
